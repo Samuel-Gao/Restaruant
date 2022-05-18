@@ -58,7 +58,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MenuItem" textLabel="CSN-Xv-RxD" detailTextLabel="rR4-ZA-Ehv" style="IBUITableViewCellStyleValue1" id="FM5-f0-Jkh">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MenuItem" textLabel="CSN-Xv-RxD" detailTextLabel="rR4-ZA-Ehv" style="IBUITableViewCellStyleValue1" id="FM5-f0-Jkh" customClass="MenuItemCell" customModule="OrderApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FM5-f0-Jkh" id="rLz-ig-EP1">
@@ -108,8 +108,8 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="MlL-W7-Mbv">
                                 <rect key="frame" x="15" y="103" width="384" height="238.5"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jgp-sp-E50">
-                                        <rect key="frame" x="0.0" y="0.0" width="384" height="181.5"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo.on.rectangle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="jgp-sp-E50">
+                                        <rect key="frame" x="0.0" y="0.5" width="384" height="180.5"/>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a7D-7a-u09">
                                         <rect key="frame" x="0.0" y="189.5" width="384" height="20.5"/>
@@ -182,7 +182,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OrderItem" textLabel="dnF-Ua-dkp" detailTextLabel="QO6-VI-paQ" style="IBUITableViewCellStyleValue1" id="2Dy-if-PnU">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OrderItem" textLabel="dnF-Ua-dkp" detailTextLabel="QO6-VI-paQ" style="IBUITableViewCellStyleValue1" id="2Dy-if-PnU" customClass="MenuItemCell" customModule="OrderApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2Dy-if-PnU" id="G2I-6V-z5y">
@@ -212,11 +212,62 @@
                             <outlet property="delegate" destination="S5j-l8-OWh" id="TPk-NO-b3p"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="wmy-Ip-7CG"/>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="wmy-Ip-7CG">
+                        <barButtonItem key="rightBarButtonItem" title="Submit" id="HNR-r4-qbG">
+                            <connections>
+                                <action selector="submitOrder:" destination="S5j-l8-OWh" id="ddB-2R-WDK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="Q7u-ER-V2J" kind="presentation" identifier="confirmOrder" destinationCreationSelector="confirmOrder:sender:" id="R35-UE-gRK"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J1a-eS-KxU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="940.57971014492762" y="124.55357142857142"/>
+        </scene>
+        <!--Order Confirmation View Controller-->
+        <scene sceneID="JEC-Bs-OZT">
+            <objects>
+                <viewController id="Q7u-ER-V2J" customClass="OrderConfirmationViewController" customModule="OrderApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5vq-Ng-Svr" customClass="Order">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you for your order! Your wait time is approximately 15 minutes" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="img-tq-jTH">
+                                <rect key="frame" x="15" y="400.5" width="384" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JzE-v0-okB">
+                                <rect key="frame" x="169.5" y="456.5" width="75" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Dismiss"/>
+                                <connections>
+                                    <segue destination="osi-fx-xOc" kind="unwind" identifier="dismissConfirmation" unwindAction="unwindToOrderListWithSegue:" id="Yxy-zU-xHh"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="VI2-ef-yCW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="img-tq-jTH" firstAttribute="leading" secondItem="5vq-Ng-Svr" secondAttribute="leading" constant="15" id="7l3-r6-PZq"/>
+                            <constraint firstAttribute="trailing" secondItem="img-tq-jTH" secondAttribute="trailing" constant="15" id="Ifi-9T-svH"/>
+                            <constraint firstItem="JzE-v0-okB" firstAttribute="top" secondItem="img-tq-jTH" secondAttribute="bottom" constant="15" id="ba9-s5-tp6"/>
+                            <constraint firstItem="JzE-v0-okB" firstAttribute="centerX" secondItem="5vq-Ng-Svr" secondAttribute="centerX" id="r9U-Yj-lKA"/>
+                            <constraint firstItem="img-tq-jTH" firstAttribute="centerY" secondItem="5vq-Ng-Svr" secondAttribute="centerY" id="z5s-5k-xqT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="confirmationLabel" destination="img-tq-jTH" id="jzP-1x-vm6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tel-Uc-2Ud" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="osi-fx-xOc" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1861" y="125"/>
         </scene>
         <!--Your Order-->
         <scene sceneID="8bL-IQ-Fsj">
@@ -275,6 +326,7 @@
     <resources>
         <image name="bag" catalog="system" width="128" height="128"/>
         <image name="list.bullet" catalog="system" width="128" height="88"/>
+        <image name="photo.on.rectangle" catalog="system" width="128" height="97"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

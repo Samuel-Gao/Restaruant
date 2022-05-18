@@ -12,6 +12,7 @@ class MenuTableViewController: UITableViewController {
     let category: String
     let menuController = MenuController.shared
     var menuItems = [MenuItem]()
+    var imageLoadTasks: [IndexPath: Task<Void, Never>] = [:]
     
     init?(coder: NSCoder, category: String) {
         self.category = category
@@ -81,11 +82,42 @@ class MenuTableViewController: UITableViewController {
     }
     
     func configureCell(_ cell: UITableViewCell, forMenuItemAt indexPath: IndexPath) {
+        guard let cell = cell as? MenuItemCell else { return }
+        
         let menuItem = menuItems[indexPath.row]
-        var content = cell.defaultContentConfiguration()
-        content.text = menuItem.name
-        content.secondaryText = menuItem.price.formatted(.currency(code: "usd"))
-        cell.contentConfiguration = content
+        cell.itemName = menuItem.name
+        cell.price = menuItem.price
+        cell.image = nil
+        
+//        var content = cell.defaultContentConfiguration()
+//        content.text = menuItem.name
+//        content.secondaryText = menuItem.price.formatted(.currency(code: "usd"))
+//        content.image = UIImage(systemName: "photo.on.rectangle")
+//        cell.contentConfiguration = content
+        
+        imageLoadTasks[indexPath] = Task.init {
+            if let image = try? await MenuController.shared.fetchImage(from: menuItem.imageURL) {
+                if let currentIndexPath = self.tableView.indexPath(for: cell), currentIndexPath == indexPath {
+//                    var content =  cell.defaultContentConfiguration()
+                    cell.image = image
+//                    content.text = menuItem.name
+//                    content.secondaryText = menuItem.price.formatted(.currency(code: "usd"))
+//                    content.image = image
+//                    cell.contentConfiguration = content
+                }
+            }
+            imageLoadTasks[indexPath] = nil
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        imageLoadTasks[indexPath]?.cancel()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        imageLoadTasks.forEach { key, value in
+            value.cancel()
+        }
     }
 
     /*
